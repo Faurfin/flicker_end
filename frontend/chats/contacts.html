@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Контакты</title>
+    <link rel="stylesheet" href="/chats_static/css/base.css" />
+    <link rel="stylesheet" href="/chats_static/chats.css" />
+  </head>
+  <body class="contacts-page">
+    <script>
+      const API_BASE_URL = window.location.origin;
+      window.CURRENT_USER_EMAIL = "{{ user_email }}";
+      window.CURRENT_USER_ID = "{{ user_id }}";
+    </script>
+
+    <div class="contacts-main-wrapper">
+      <!-- Левая боковая панель (Navbar) -->
+      <aside class="contacts-navbar">
+        <nav class="contacts-nav-menu">
+          <div class="contacts-nav-top">
+            <button class="contacts-nav-item">
+              <img src="/images/message-circle-white.svg" alt="Чаты" />
+              <span>Чаты</span>
+            </button>
+            <button class="contacts-nav-item">
+              <img src="/images/smiley-happy.svg" alt="Каналы" />
+              <span>Каналы</span>
+            </button>
+            <button class="contacts-nav-item">
+              <img src="/images/grops.svg" alt="Группы" />
+              <span>Группы</span>
+            </button>
+            <button class="contacts-nav-item">
+              <img src="/images/stars.svg" alt="Боты" />
+              <span>Боты</span>
+            </button>
+          </div>
+          <div class="contacts-nav-bottom">
+            <button class="contacts-nav-item active">
+              <img src="/images/user-profile-circle.svg" alt="Контакты" />
+              <span>Контакты</span>
+            </button>
+            <button class="contacts-nav-item">
+              <img src="/images/phone.svg" alt="Звонки" />
+              <span>Звонки</span>
+            </button>
+            <button class="contacts-nav-item">
+              <img src="/images/настройки.svg" alt="Настройки" />
+              <span>Настройки</span>
+            </button>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Основной контент -->
+      <div class="contacts-content-wrapper">
+        <!-- Заголовок -->
+        <div class="contacts-header-section">
+          <div class="contacts-header-left">
+            <h1 class="contacts-main-title">Контакты</h1>
+            <div class="contacts-header-right">
+              <button class="contacts-sort-btn" id="contactsSortBtn">Сортировка</button>
+              <button class="contacts-add-btn" id="openAddContactBtn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Новый контакт</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Список контактов -->
+        <div class="contacts-list-wrapper">
+          <div class="contacts-empty hidden" id="contactsEmpty">
+            Пока нет контактов
+          </div>
+          <ul class="contacts-list-main" id="contactsList"></ul>
+        </div>
+      </div>
+
+      <!-- Правая панель с иллюстрацией -->
+      <aside class="contacts-side-panel">
+        <div class="contacts-illustration-container">
+          <div class="contacts-illustration">
+            <svg width="481" height="458" viewBox="0 0 481 458" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Упрощенная иллюстрация человека с ноутбуком -->
+              <circle cx="240" cy="120" r="50" stroke="#02060F" stroke-width="2" fill="none"/>
+              <path d="M190 220 Q240 200 290 220" stroke="#02060F" stroke-width="2" fill="none"/>
+              <rect x="160" y="280" width="160" height="100" rx="8" stroke="#02060F" stroke-width="2" fill="none"/>
+              <line x1="200" y1="320" x2="280" y2="320" stroke="#02060F" stroke-width="2"/>
+              <line x1="200" y1="350" x2="280" y2="350" stroke="#02060F" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="contacts-side-content">
+            <p class="contacts-side-text">
+              У вас <span id="contactsCountDisplay">25</span> контактов. Так держать! Приглашайте друзей и родных по ссылке:
+            </p>
+            <button class="contacts-invite-link-btn" id="contactsInviteLinkBtn">
+              (название ссылки)
+            </button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Модалка добавления контакта -->
+    <div class="modal-backdrop hidden" id="addContactModal">
+      <div class="add-contact-modal">
+        <div class="add-contact-header">
+          <div>
+            <h3>Новый контакт</h3>
+            <p>Имя обязательно, фамилия — по желанию</p>
+          </div>
+          <button class="modal-close-btn" id="addContactCloseBtn" aria-label="Закрыть">×</button>
+        </div>
+        <form id="addContactForm" class="add-contact-form">
+          <label class="form-label">Имя*</label>
+          <input type="text" id="contactFirstName" class="form-input" placeholder="Имя" required />
+          <label class="form-label">Фамилия</label>
+          <input type="text" id="contactLastName" class="form-input" placeholder="Фамилия (необязательно)" />
+          <label class="form-label">Почта</label>
+          <input type="email" id="contactEmail" class="form-input" placeholder="example@mail.com" required />
+          <div class="form-error hidden" id="addContactError"></div>
+          <div class="add-contact-actions">
+          <button type="button" class="secondary-btn" id="cancelAddContact">Отмена</button>
+            <button type="submit" class="primary-btn">Добавить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="/chats_static/js/contacts.js"></script>
+  </body>
+</html>
+

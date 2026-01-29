@@ -1,0 +1,306 @@
+/* ================================================================ */
+/* RESPONSIVE.CSS — адаптивность и кросс-браузерность               */
+/* Mobile-first, safe areas, touch, prefers-reduced-motion          */
+/* ================================================================ */
+
+/* --- 1. Переменные breakpoints и safe area (для использования в медиа) --- */
+:root {
+  --bp-xs: 320px;
+  --bp-sm: 480px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1200px;
+  --bp-2xl: 1440px;
+  --bp-3xl: 1920px;
+  --bp-4xl: 2560px;
+
+  /* Safe area (iPhone X+, Android gesture nav). Fallback 0 для старых браузеров */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+
+  /* Минимальный тап-таргет (WCAG / Apple HIG) */
+  --touch-target-min: 44px;
+}
+
+/* --- 2. Кросс-браузерная база --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Контейнер приложения с учётом safe area */
+.container {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+}
+
+.app {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* --- 3. Touch-friendly: минимальные размеры кликабельных элементов --- */
+button,
+[role="button"],
+a.nav-button,
+.chat-list-item-btn,
+.input-icon-btn,
+.chat-header-btn,
+.search-submit-btn,
+.search-clear-btn,
+.send-button,
+.attachment-icon,
+.emoji-btn,
+.emoji-category-btn {
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+}
+
+/* Увеличенная зона нажатия для мелких иконок (не меняя визуальный размер) */
+.chat-header-btn.back-btn {
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+  padding: 10px;
+  margin: -4px 0;
+}
+
+/* --- 4. Flexbox gap fallback для старых Safari (если нужен полифилл — через JS) --- */
+@supports not (gap: 1px) {
+  .menu-top,
+  .menu-bottom {
+    margin-bottom: 22px;
+  }
+}
+
+/* --- 5. Backdrop-filter fallback (Safari < 14, Firefox без flag) --- */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .chat-input-form {
+    background: var(--color-background-message);
+  }
+  body.theme-dark .chat-input-form {
+    background: var(--color-background-2);
+  }
+}
+
+/* --- 6. Скроллбары: Firefox --- */
+.chat-messages,
+.chat-list-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(79, 124, 255, 0.5) transparent;
+}
+
+body.theme-dark .chat-messages,
+body.theme-dark .chat-list-scroll {
+  scrollbar-color: rgba(91, 140, 255, 0.6) transparent;
+}
+
+/* --- 7. Уменьшение анимаций при prefers-reduced-motion --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Класс, который JS может выставить при prefers-reduced-motion — дублируем отключение анимаций */
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* --- 8. Safe area только на мобильных (iPhone с «чёлкой») --- */
+@media (max-width: 900px) {
+  .chat-list {
+    padding-top: var(--safe-top);
+    padding-left: calc(8px + var(--safe-left));
+    padding-right: calc(8px + var(--safe-right));
+  }
+
+  .chat-header {
+    padding-left: calc(12px + var(--safe-left));
+    padding-right: calc(12px + var(--safe-right));
+    padding-top: calc(12px + var(--safe-top));
+  }
+
+  .chat-input-container {
+    padding-left: calc(12px + var(--safe-left));
+    padding-right: calc(12px + var(--safe-right));
+    padding-bottom: calc(12px + var(--safe-bottom));
+  }
+
+  .chat-window.view-active,
+  .chat-empty.view-active {
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
+  }
+}
+
+/* --- 8b. Маленькие экраны (320–479) --- */
+@media (max-width: 479px) {
+  .chat-list {
+    padding-left: calc(8px + var(--safe-left));
+    padding-right: calc(8px + var(--safe-right));
+  }
+
+  .chat-header,
+  .chat-input-container {
+    padding-left: calc(12px + var(--safe-left));
+    padding-right: calc(12px + var(--safe-right));
+  }
+
+  .chat-empty__title {
+    font-size: clamp(1.5rem, 8vw, 3rem);
+    line-height: 1.2;
+  }
+
+  .message {
+    max-width: 88%;
+  }
+}
+
+/* --- 9. Планшеты и узкие десктопы (768–1023) --- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .chat-list {
+    width: min(360px, 45vw);
+    max-width: 100%;
+  }
+}
+
+/* --- 10. Десктоп: фиксированная ширина списка чатов --- */
+@media (min-width: 1024px) {
+  .chat-list {
+    width: min(var(--chatlist-width, 660px), 45vw);
+    max-width: 660px;
+  }
+}
+
+/* --- 11. Большие и ультра-широкие экраны --- */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 100%;
+  }
+
+  .chat-window {
+    max-width: min(calc(100vw - var(--sidebar-width, 129px) - var(--chatlist-width, 660px) - 40px), 1200px);
+  }
+}
+
+@media (min-width: 1920px) {
+  .chat-window {
+    max-width: 1400px;
+  }
+}
+
+/* --- 12. Высота при виртуальной клавиатуре (mobile) --- */
+@media (max-width: 900px) {
+  .chat-list,
+  .chat-window,
+  .chat-empty {
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: 100%;
+  }
+
+  .chat-messages-wrapper {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .chat-input-container {
+    padding-bottom: calc(8px + var(--safe-bottom));
+  }
+}
+
+/* --- 13. Портретная ориентация на планшетах --- */
+@media (max-width: 900px) and (orientation: portrait) {
+  .chat-empty__illustration img {
+    max-height: 180px;
+  }
+}
+
+/* --- 14. Ландшафт на маленьких экранах --- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .chat-header {
+    min-height: 52px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .chat-input-form {
+    height: 48px;
+  }
+
+  .chat-empty__title {
+    font-size: 1.5rem;
+  }
+}
+
+/* --- 15. HiDPI/Retina: чёткость границ (опционально) --- */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .chat-list-item-btn,
+  .message {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+}
+
+/* --- 16. Увеличение 200% (WCAG): убедиться, что ничего не обрезается --- */
+@media (min-width: 640px) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* здесь при необходимости можно добавить правила для больших масштабов */
+  }
+}
+
+/* --- 17. Focus visible для клавиатурной навигации --- */
+button:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Скрыть outline при клике мышью/тапе, оставить для клавиатуры */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* --- 18. Список чатов: запрет горизонтального скролла на мобильных --- */
+@media (max-width: 900px) {
+  .chat-list,
+  .chat-list-scroll,
+  .app {
+    overflow-x: hidden;
+  }
+
+  .chat-list ul {
+    max-width: 100%;
+  }
+}

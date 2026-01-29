@@ -1,0 +1,555 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;800&display=swap");
+
+* {
+  box-sizing: border-box;
+  font-family: "Manrope", sans-serif;
+}
+
+/* --- Основные стили страницы и контейнера --- */
+body {
+  margin: 0;
+  /* светлый фон как в макете */
+  background-color: #F5F6FA;
+  color: #0f1417;
+  min-height: 100vh;
+}
+
+/* Адаптивный Flex-контейнер для двух колонок */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px;
+  gap: 80px;
+}
+
+/* --- Левая Панель (Форма) --- */
+.auth-panel {
+  align-items: center;
+  text-align: center;
+  max-width: 594px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  gap: 0; /* Убираем общий gap, теперь управляем отступами отдельно */
+  position: relative;
+  min-height: 600px; /* Увеличиваем минимальную высоту */
+  justify-content: space-between; /* Распределяем контент по высоте */
+}
+
+/* Контейнер для двух строк текста внизу */
+/* Обновляем позиционирование footer */
+.auth-footer-info {
+  position: absolute;
+  bottom: -100px; /* Увеличиваем отступ от низа */
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 500;
+  color: #9aa0a6; /* нейтральный серый */
+  padding: 20px 10px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* Логотип "Flicker" (Frame 67) */
+.logo-title {
+  font-size: 54px;
+  line-height: 41px;
+  font-weight: 650;
+  color: #2D5BFF; /* голубой логотип как на макете */
+  margin-bottom: 5px;
+}
+
+.title {
+  font-size: 64px;
+  line-height: 72px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #0f1417; /* основной текст тёмный */
+  margin: 0 0 20px 0; /* Добавляем отступ снизу */
+}
+
+/* --- Блок вкладок (Frame 62) --- */
+.tab-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* Добавляем это для центрирования */
+  gap: 8px;
+  height: 40px;
+  margin-bottom: 40px;
+  margin-top: 10px;
+  width: 100%; /* Добавляем ширину 100% */
+}
+
+.tab-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 100%;
+  min-width: 69px;
+}
+
+/* Активная вкладка (черная, как на макете) */
+.tab-button.active {
+  background: #0f1417;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(15, 20, 23, 0.12);
+}
+
+/* Неактивная вкладка (светлая) */
+.tab-button.inactive {
+  background: #ffffff;
+  color: #0f1417;
+  font-weight: 500;
+  border: 1px solid rgba(15,20,23,0.06);
+}
+
+.tab-button:hover {
+  opacity: 0.95;
+}
+
+/* --- Форма и Инпуты --- */
+form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.forms-container {
+  position: relative;
+  width: 100%;
+  /* Фиксируем высоту контейнера форм */
+  min-height: 300px;
+  margin-bottom: 60px; /* Отступ для footer */
+}
+
+.input-group {
+  width: 100%;
+  height: 48px; /* чуть уже, как на макете */
+  background: #ffffff; /* белая подложка полей */
+  border-radius: 12px; /* более мягкий радиус */
+  display: flex;
+  align-items: center;
+  position: relative;
+  border: 1px solid rgba(15,20,23,0.06);
+  padding: 0 12px;
+  box-shadow: 0 1px 0 rgba(15,20,23,0.02) inset;
+}
+
+.input-label {
+  display: none !important;
+}
+
+.username-input,
+.email-input,
+.password-input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  padding: 0 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #0f1417; /* темный текст */
+  outline: none;
+}
+
+.input-group:focus-within {
+  box-shadow: 0 0 0 3px rgba(45, 91, 255, 0.12); /* легкий синий ореол */
+  border-color: rgba(45, 91, 255, 0.28);
+}
+
+.username-input::placeholder,
+.email-input::placeholder,
+.password-input::placeholder {
+    color: #bfc6d3 !important; /* светло-серый подсказка */
+    opacity: 1 !important;
+    font-weight: 500 !important;
+}
+
+/* Исправление стилей автозаполнения */
+.username-input:-webkit-autofill,
+.email-input:-webkit-autofill,
+.password-input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #0f1417 !important;
+    border-radius: 12px;
+    background-color: #ffffff !important;
+}
+
+.username-input:-webkit-autofill:focus,
+.email-input:-webkit-autofill:focus,
+.password-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset, 0 0 0 2px rgba(45,91,255,0.12) !important;
+}
+
+/* Убираем стандартные браузерные стили */
+.username-input,
+.email-input,
+.password-input {
+    width: 100%;
+    height: 100%;
+    background: transparent !important;
+    border: none;
+    padding: 0 16px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #0f1417 !important;
+    outline: none;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Для других браузеров */
+.username-input:autofill,
+.email-input:autofill,
+.password-input:autofill {
+    background-color: #ffffff !important;
+    color: #0f1417 !important;
+}
+
+.password-input::-webkit-credentials-auto-fill-button {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  position: absolute;
+  right: -1000px;
+}
+
+.password-input::-webkit-contacts-auto-fill-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.password-input::-webkit-strong-password-auto-fill-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Для Firefox */
+.password-input::-ms-reveal {
+  display: none !important;
+}
+
+/* Для Edge */
+.password-input::-ms-clear {
+  display: none !important;
+}
+
+/* Контейнер для поля пароля (для иконки) */
+.password-input-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-container .password-input {
+  padding-right: 50px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eye-open,
+.eye-closed {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Начальное состояние иконок глаз (пароль скрыт - показываем открытый глаз) */
+.eye-open {
+    display: block;
+}
+
+.eye-closed {
+    display: none;
+}
+
+/* --- Кнопка "Зарегистрироваться" --- */
+.continue-button {
+  width: 100%;
+  height: 56px;
+  padding: 12px 0;
+  background-color: #2D5BFF; /* синий как на картинке */
+  border: none;
+  border-radius: 12px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.02em;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.continue-button:hover {
+  background-color: #234de0;
+  box-shadow: 0 8px 18px rgba(45, 91, 255, 0.22);
+}
+
+.continue-button:active {
+  transform: scale(0.995);
+}
+
+.link a {
+  color: #2D5BFF;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+/* --- Правая Панель (Изображение) --- */
+.image-panel {
+  /* Занимает доступное место */
+  max-width: 800px;
+  width: 100%;
+  height: 800px;
+  background-image: url("/images/phone_woman.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 30px;
+  overflow: hidden;
+  flex-grow: 1;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+/* декоративные синие формы поверх фото (чтобы было как в макете) */
+.image-panel::before,
+.image-panel::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(45,91,255,0.18), rgba(45,91,255,0) 60%);
+  filter: blur(26px);
+  mix-blend-mode: screen;
+}
+
+.image-panel::before {
+  width: 360px;
+  height: 360px;
+  top: -30px;
+  right: 40px;
+}
+
+.image-panel::after {
+  width: 420px;
+  height: 420px;
+  bottom: -80px;
+  left: 120px;
+}
+
+/* Текстовый карточка на правой панели - если хочешь контролировать из HTML, используй .image-caption (вставь элемент в HTML внутри .image-panel) */
+.image-caption {
+  position: absolute;
+  bottom: 40px;
+  left: 34px;
+  background: linear-gradient(135deg, #3B66FF 0%, #2D5BFF 100%);
+  color: #fff;
+  padding: 18px 22px;
+  border-radius: 14px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  max-width: 360px;
+  box-shadow: 0 10px 30px rgba(45,91,255,0.18);
+}
+
+/* --- Адаптивность --- */
+@media (max-width: 1200px) {
+  .container {
+    /* Переход к одноколоночному макету */
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px;
+  }
+
+  .auth-panel {
+    max-width: 450px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .title,
+  .subtitle {
+    text-align: center;
+  }
+
+  .title {
+    font-size: 48px;
+    line-height: 56px;
+  }
+
+  .image-panel {
+    height: 300px;
+    min-width: 100%;
+  }
+
+  .tab-container {
+    justify-content: center;
+  }
+
+  .auth-footer-info {
+    display: none;
+  }
+}
+
+.form {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+.form.active {
+  display: flex;
+}
+
+/* Добавьте это правило - скрываем глазки в неактивных формах */
+.form:not(.active) .toggle-password {
+  display: none;
+}
+
+/* Анимация для глазка */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-50%) rotate(-5deg);
+  }
+  75% {
+    transform: translateY(-50%) rotate(5deg);
+  }
+}
+
+/* Состояния иконок глазка */
+#eyeClosed {
+  opacity: 0;
+  transform: scale(0.8) rotate(15deg);
+}
+
+.toggle-password.active #eyeOpen {
+  opacity: 0;
+  transform: scale(0.8) rotate(-15deg);
+}
+
+.toggle-password.active #eyeClosed {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.static-content {
+  text-align: center;
+  width: 100%;
+  /* Фиксируем высоту статичного контента */
+  min-height: 200px;
+}
+
+/* Текст согласия под кнопкой регистрации */
+.agreement-text {
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #6b7280; /* мягкий серый */
+}
+
+.agreement-text a {
+  color: #2D5BFF;
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.agreement-text a:hover {
+  text-decoration: none;
+}
+
+/* Модальные окна для политики и правил */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 20px;
+}
+
+.modal-content {
+  background: #ffffff;
+  max-width: 640px;
+  width: 100%;
+  margin: 40px auto;
+  padding: 24px 24px 20px;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(15, 20, 23, 0.25);
+  position: relative;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.modal-content p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #4b5563;
+  margin: 8px 0;
+}
+
+.modal-close {
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
+  color: #9ca3af;
+  padding: 4px;
+}
+
+.modal-close:hover {
+  color: #4b5563;
+}

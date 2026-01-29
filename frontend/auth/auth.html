@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация :: Flicker</title>
+    <link href="/auth_static/auth.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <!-- ЛЕВАЯ ПАНЕЛЬ: ФОРМА РЕГИСТРАЦИИ -->
+        <div class="auth-panel">
+            <!-- СТАТИЧНЫЙ КОНТЕНТ -->
+            <div class="static-content">
+                <h1 class="logo-title">Flicker</h1>
+                <h2 class="title">Добро пожаловать!</h2>
+
+                <!-- Вкладки -->
+                <div class="tab-container">
+                    <button class="tab-button" data-tab="register">Регистрация</button>
+                    <button class="tab-button" data-tab="login">Вход</button>
+                </div>
+            </div>
+
+            <!-- ФОРМЫ -->
+            <div class="forms-container">
+                <!-- РЕГИСТРАЦИЯ -->
+                <form 
+                    id="register-form" 
+                    class="form"
+                    action="/register" 
+                    method="post">
+                    
+                    <div class="input-group">
+                        <label for="username" class="input-label">Имя пользователя</label>
+                        <input type="text" id="username" name="username" class="username-input" placeholder="Имя пользователя" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="email" class="input-label">Email</label>
+                        <input type="email" id="email" name="email" class="email-input" placeholder="Email" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <div class="password-input-container">
+                            <label for="password" class="input-label">Пароль</label>
+                            <input type="password" id="password" name="password" class="password-input" placeholder="Пароль" required>
+                            <button type="button" class="toggle-password" aria-label="Показать пароль">
+                                <img src="/images/eye-open.svg" alt="Показать пароль" class="eye-open">
+                                <img src="/images/eye-closed.svg" alt="Скрыть пароль" class="eye-closed">
+                            </button>
+                        </div>
+                    </div>
+
+                    {% if tab == 'register' and error_message %}
+                        <p style="color: red; font-size: 0.9em; margin-top: 5px;">{{ error_message }}</p>
+                    {% endif %}
+
+                    <button type="submit" class="continue-button">Зарегистрироваться</button>
+
+                    <p class="agreement-text">
+                        Продолжая регистрацию, вы соглашаетесь с
+                        <a href="#" id="open-privacy">Политикой конфиденциальности</a>
+                        и
+                        <a href="#" id="open-terms">Правилами пользования</a>.
+                    </p>
+                </form>
+                    
+                <!-- ВХОД -->
+                <form 
+                    id="login-form" 
+                    class="form" 
+                    action="/login" 
+                    method="post">
+                    
+                    <div class="input-group">
+                        <label for="login-email" class="input-label">Email</label>
+                        <input type="email" id="login-email" name="email" class="email-input" placeholder="Email" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <div class="password-input-container">
+                            <label for="login-password" class="input-label">Пароль</label>
+                            <input type="password" id="login-password" name="password" class="password-input" placeholder="Пароль" required>
+                            <button type="button" class="toggle-password" aria-label="Показать пароль">
+                                <img src="/images/eye-open.svg" alt="Показать пароль" class="eye-open">
+                                <img src="/images/eye-closed.svg" alt="Скрыть пароль" class="eye-closed">
+                            </button>
+                        </div>
+                    </div>
+
+                    {% if tab == 'login' and error_message %}
+                        <p style="color: red; font-size: 0.9em; margin-top: 5px;">{{ error_message }}</p>
+                    {% endif %}
+                    {% if tab == 'login' and success_message %}
+                        <p style="color: green; font-size: 0.9em; margin-top: 5px;">{{ success_message }}</p>
+                    {% endif %}
+
+                    <button type="submit" class="continue-button">Войти</button>
+                </form>
+            </div>
+
+            <!-- ФУТЕР -->
+            <div class="auth-footer-info">
+                <span class="auth-group-name">Group "Flicker-Team"</span>
+                <span class="auth-year">2025</span>
+            </div>
+        </div>
+
+        <!-- ПРАВАЯ ПАНЕЛЬ -->
+        <div class="image-panel"></div>
+    </div>
+
+    <!-- Модальное окно: Политика конфиденциальности -->
+    <div id="privacy-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" data-close="privacy-modal" aria-label="Закрыть окно">&times;</button>
+            <h2>Политика конфиденциальности</h2>
+            <p>
+                Данный мессенджер (далее — «Сервис») создан исключительно в образовательных целях в рамках
+                учебного проекта и не предназначен для коммерческого использования или массового распространения.
+            </p>
+            <p>
+                Все обрабатываемые данные используются только для обеспечения работы Сервиса (отправка и получение
+                сообщений), демонстрации функционала мессенджера в рамках учебного проекта, а также для улучшения и
+                отладки Сервиса в ходе обучения. Данные не используются для рекламы, профилирования или передачи
+                третьим лицам в коммерческих целях.
+            </p>
+            <p>
+                В зависимости от реализации Сервиса могут обрабатываться: регистрационные данные (логин, имя/никнейм,
+                при необходимости — электронная почта), технические данные (IP-адрес, тип устройства/браузера,
+                время доступа) и содержание сообщений, которые вы добровольно отправляете через Сервис.
+            </p>
+            <p>
+                Обработка данных осуществляется на основании вашего согласия, выраженного через использование
+                Сервиса, и в рамках образовательных целей проекта. Данные не продаются и не передаются третьим лицам,
+                за исключением случаев, когда это прямо требуется законом.
+            </p>
+            <p>
+                Данные хранятся только в течение срока существования учебного проекта или до их удаления автором
+                проекта/администратором. При разработке принимаются разумные меры для защиты данных, однако
+                учитывая учебный характер проекта, абсолютная безопасность не может быть гарантирована.
+            </p>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Правила пользования -->
+    <div id="terms-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" data-close="terms-modal" aria-label="Закрыть окно">&times;</button>
+            <h2>Правила пользования</h2>
+            <p>
+                Сервис предоставляется только в учебных целях. Пользователь обязуется не использовать Сервис для
+                противоправной деятельности, рассылки спама, оскорблений, распространения вредоносного ПО и любых
+                действий, нарушающих законодательство.
+            </p>
+            <p>
+                Администратор проекта оставляет за собой право ограничить доступ или удалить учетную запись
+                пользователя при нарушении данных правил или при необходимости технического обслуживания/завершения
+                проекта.
+            </p>
+            <p>
+                Используя Сервис, вы подтверждаете, что понимаете его учебный характер и соглашаетесь с возможными
+                ограничениями функциональности, стабильности и сохранности данных.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Функция проверки, авторизован ли пользователь (есть ли рабочий токен в куке)
+        async function checkAuthAndRedirect() {
+            try {
+                const resp = await fetch('/users/me', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                if (resp.ok) {
+                    // Уже авторизован — сразу в чаты
+                    window.location.replace('/');
+                }
+            } catch (e) {
+                // Если ошибка сети/запроса — ничего не делаем, просто остаёмся на странице авторизации
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // На всякий случай проверяем авторизацию и с фронта
+            checkAuthAndRedirect();
+
+            const tabParam = "{{ tab or 'register' }}";
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const registerForm = document.getElementById('register-form');
+            const loginForm = document.getElementById('login-form');
+
+            function switchForm(tab) {
+                const isRegister = tab === 'register';
+                registerForm.classList.toggle('active', isRegister);
+                loginForm.classList.toggle('active', !isRegister);
+
+                tabButtons.forEach(button => {
+                    const active = button.dataset.tab === tab;
+                    button.classList.toggle('active', active);
+                    button.classList.toggle('inactive', !active);
+                });
+            }
+
+            // Начальная вкладка (с сервера)
+            switchForm(tabParam);
+
+            // Переключение вкладок
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tab = button.dataset.tab;
+                    switchForm(tab);
+                    // обновим URL без перезагрузки
+                    const newUrl = new URL(window.location);
+                    newUrl.searchParams.set('tab', tab);
+                    history.replaceState(null, '', newUrl);
+                });
+            });
+
+            // Переключение видимости пароля
+            document.addEventListener('click', function(e) {
+                const toggleBtn = e.target.closest('.toggle-password');
+                if (!toggleBtn) return;
+
+                const input = toggleBtn.closest('.password-input-container').querySelector('.password-input');
+                const eyeOpen = toggleBtn.querySelector('.eye-open');
+                const eyeClosed = toggleBtn.querySelector('.eye-closed');
+
+                if (!input || !eyeOpen || !eyeClosed) return;
+
+                const isPassword = input.type === 'password';
+                // Если пароль скрыт - показываем его (и показываем иконку закрытого глаза)
+                // Если пароль виден - скрываем его (и показываем иконку открытого глаза)
+                input.type = isPassword ? 'text' : 'password';
+                eyeOpen.style.display = isPassword ? 'none' : 'block';
+                eyeClosed.style.display = isPassword ? 'block' : 'none';
+
+                input.focus();
+                toggleBtn.style.animation = 'shake 0.4s ease';
+                setTimeout(() => toggleBtn.style.animation = '', 400);
+            });
+
+            // Открытие модальных окон (политика и правила)
+            const privacyLink = document.getElementById('open-privacy');
+            const termsLink = document.getElementById('open-terms');
+
+            const privacyModal = document.getElementById('privacy-modal');
+            const termsModal = document.getElementById('terms-modal');
+
+            function openModal(modal) {
+                if (modal) {
+                    modal.style.display = 'block';
+                }
+            }
+
+            function closeModal(modal) {
+                if (modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            if (privacyLink) {
+                privacyLink.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    openModal(privacyModal);
+                });
+            }
+
+            if (termsLink) {
+                termsLink.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    openModal(termsModal);
+                });
+            }
+
+            // Закрытие по крестику
+            document.querySelectorAll('.modal-close').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const id = this.getAttribute('data-close');
+                    const modal = document.getElementById(id);
+                    closeModal(modal);
+                });
+            });
+
+            // Закрытие по клику вне контента
+            window.addEventListener('click', function (e) {
+                if (e.target.classList && e.target.classList.contains('modal')) {
+                    closeModal(e.target);
+                }
+            });
+        });
+
+        // При возврате по "назад" из BFCache (back-forward cache) тоже проверяем авторизацию
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                checkAuthAndRedirect();
+            }
+        });
+    </script>
+</body>
+</html>

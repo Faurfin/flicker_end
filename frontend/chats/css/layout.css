@@ -1,0 +1,279 @@
+/* ==================================== */
+/* LAYOUT.CSS - Стили макета */
+/* Принцип SOLID: Single Responsibility */
+/* Отвечает только за структуру макета */
+/* ==================================== */
+
+/* ==================================== */
+/* 1. ЛЕВАЯ БОКОВАЯ ПАНЕЛЬ (SIDEBAR)    */
+/* ==================================== */
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: var(--sidebar-width);
+    height: 100%;
+    position: relative;
+    flex-shrink: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: var(--color-background-2); 
+    overflow: visible; 
+    z-index: 10;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%; 
+    width: 100%;
+    padding: 38px 20px; 
+    box-sizing: border-box;
+}
+
+.nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-vertical); 
+    width: 100%;
+}
+
+.menu-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-vertical);
+    width: 100%;
+    margin-top: 0; 
+    flex-shrink: 0;
+}
+
+.menu-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-vertical);
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* Пункты меню (nav-button) */
+.nav-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+    box-sizing: border-box;
+    gap: 5px; 
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s, background-color 0.2s;
+    padding: 10px 12px; 
+    border-radius: 16px; 
+    position: relative; 
+    z-index: 1;
+}
+
+.nav-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    border-radius: 50%;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.nav-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: filter 0.2s; 
+}
+
+.nav-button span {
+    font-family: var(--font-family-main);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: -0.03em;
+    color: var(--color-text-inactive); 
+    width: 100%;
+}
+
+/* Активный пункт */
+.nav-button.active {
+    background: transparent;
+    border-radius: 0;
+    z-index: 3;
+    margin-right: 0;
+    padding: 15px 12px;
+    background-image: url("data:image/svg+xml,%3Csvg width='120' height='140' viewBox='0 0 120 140' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40C0 28 10 16 20 16C68 16 120 28 120 0V140C116 108 66 124 18 118C8 117 0 108 0 98V40Z' fill='%23346AFE'/%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.nav-button.active::before,
+.nav-button.active::after {
+    display: none;
+}
+
+.nav-button.active img {
+    filter: brightness(0) invert(1);
+}
+
+.nav-button.active span {
+    color: var(--color-text-active);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* ==================================== */
+/* 2. СПИСОК ЧАТОВ (CHAT LIST)          */
+/* ==================================== */
+
+.chat-list {
+    width: var(--chatlist-width);
+    height: 100vh;
+    padding: 8px 0;
+    margin-left: 15px;
+    margin-right: 10px; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 5px; 
+    background: transparent; 
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* Секция Поиска */
+.search { 
+    flex-shrink: 0; 
+    margin-bottom: 5px; 
+    padding: 0 4px; 
+}
+
+.search-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%;
+    height: 47px;
+    padding: 14px 16px;
+    box-sizing: border-box;
+    background: var(--color-background-2); 
+    border-radius: 23.5px;
+    position: relative;
+}
+
+.search-input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: var(--font-family-main);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: var(--color-primary);
+    margin-right: 10px; 
+}
+
+.search-input::placeholder {
+    color: var(--color-primary);
+    opacity: 1;
+}
+
+.search-submit-btn,
+.search-clear-btn {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+.search-submit-btn {
+    order: 3;
+}
+
+.search-submit-btn,
+.search-icon { 
+    width: 100%; 
+    height: 100%; 
+}
+
+.search-clear-btn {
+    order: 2;
+    font-size: 20px;
+    line-height: 1;
+    color: var(--color-text-inactive);
+    margin-right: -10px;
+}
+
+/* Контейнер Списка Чатов */
+.chat-list-scroll {
+    flex-grow: 1;
+    overflow-y: auto;
+    background: var(--color-background-2); 
+    border-radius: 20px;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.chat-list-scroll::-webkit-scrollbar { 
+    width: 4px; 
+}
+
+.chat-list-scroll::-webkit-scrollbar-thumb { 
+    background-color: var(--color-text-inactive); 
+    border-radius: 2px; 
+}
+
+.chat-list-scroll::-webkit-scrollbar-track { 
+    background-color: transparent; 
+}
+
+/* Скрытие/показ секций при переключении вкладок */
+.chat-list.hidden,
+.settings-section.hidden {
+    display: none !important;
+}
+
+.chat-empty.hidden,
+.chat-window.hidden {
+    display: none !important;
+}
+

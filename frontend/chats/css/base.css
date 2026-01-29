@@ -1,0 +1,118 @@
+/* ==================================== */
+/* BASE.CSS - Базовые стили и переменные */
+/* Принцип SOLID: Single Responsibility */
+/* Отвечает только за базовые настройки */
+/* ==================================== */
+
+:root {
+    /* Базовая светлая тема (молодёжная палитра 2024) */
+    --color-primary: #4f7cff;                /* Акцентный сине-фиолетовый */
+    --color-primary-soft: #e1e7ff;
+    --color-accent-neo: #5bffce;             /* Неоновый акцент */
+    --color-accent-pink: #ff6fd8;
+    --color-background-app: #f5f6fb;         /* Внешний фон */
+    --color-background-1: #ffffff;           /* Карточки/окно чата */
+    --color-background-2: #eef0f6;           /* Сайдбар, список чатов, поиск */
+    --color-background-message: #f9f9ff;     /* Пузырь сообщений по умолчанию */
+    --color-background-hover: rgba(79, 124, 255, 0.08);
+    --color-background-selected: #e1e7ff;
+    --color-text-active: #ffffff;
+    --color-text-inactive: #9ba0b5;
+    --color-text-dark: #050816;
+    --color-divider: #dde1ee;
+    --color-online: #37e342;
+    --color-delete-bg: #f22c2c;
+
+    /* Градиенты и сияние */
+    --gradient-primary: linear-gradient(135deg, #4f7cff 0%, #8f5bff 50%, #ff6fd8 100%);
+    --gradient-accent: linear-gradient(135deg, #5bffce 0%, #4f7cff 50%, #ff6fd8 100%);
+    --glow-primary: 0 0 18px rgba(79, 124, 255, 0.55);
+    --glow-accent: 0 0 20px rgba(91, 255, 206, 0.55);
+
+    /* Шрифты: современный sans-serif */
+    --font-family-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-accent: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    /* Размеры */
+    --sidebar-width: 129px;
+    --chatlist-width: 660px;
+    --logo-bg-height: 83px;
+    --icon-size: 44px;
+    --chat-item-height: 83px;
+    --gap-vertical: 22px;
+    --header-height: 74px;
+}
+
+/* Тёмная тема - неоновый полумрак (Telegram/Discord стиль)
+   Цвета (primary, background и т.п.) теперь управляются через JS (theme.js),
+   поэтому здесь оставляем только дополнительные эффекты, чтобы не перекрывать кастомизацию. */
+body.theme-dark {
+    --gradient-primary: linear-gradient(135deg, #5b8cff 0%, #8f5bff 50%, #ff7ad9 100%);
+    --gradient-accent: linear-gradient(135deg, #43ffd0 0%, #5b8cff 50%, #ff7ad9 100%);
+    --glow-primary: 0 0 24px rgba(91, 140, 255, 0.7);
+    --glow-accent: 0 0 20px rgba(67, 255, 208, 0.65);
+}
+
+/* Сброс стилей и базовые настройки макета */
+body {
+    font-family: var(--font-family-main);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden; 
+    background-color: var(--color-background-app);
+    transition: background-color 220ms ease, color 220ms ease;
+    position: relative;
+}
+
+/* Оверлей для плавного перехода темы */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at top, rgba(0,0,0,0.22), transparent 60%);
+    opacity: 0;
+    transition: opacity 260ms ease;
+    mix-blend-mode: multiply;
+    z-index: 999;
+}
+
+body.theme-transitioning::before {
+    opacity: 1;
+}
+
+/* Для страницы контактов - полная высота без прокрутки */
+body.contacts-page {
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Кросс-браузер: единый box-sizing (дублирует responsive.css при отключённом responsive) */
+.container,
+.app {
+    box-sizing: border-box;
+}
+
+/* Класс-помощник для скрытия элементов */
+.hidden {
+    display: none !important;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+}
+
+.app {
+    display: flex;
+    height: 100vh;
+}
+
